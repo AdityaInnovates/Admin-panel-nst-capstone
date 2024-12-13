@@ -1,7 +1,7 @@
 import Nav from "./components/nav/nav";
 import "./App.css";
 import StudentTable from "./components/landing/student_table";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useState } from "react";
 import Evaluation from "./components/evalutation/evaluation";
 import Queries from "./components/queries";
@@ -14,7 +14,7 @@ function App() {
 
   return (
     <>
-      <BrowserRouter>
+      <Router>
         <Routes>
           <Route path="/"
                   element = {<Login/>}
@@ -37,7 +37,7 @@ function App() {
           />
           <Route path="/evaluate" element={<Evaluation />} />
         </Routes>
-      </BrowserRouter>
+      </Router>
     </>
   );
 }
