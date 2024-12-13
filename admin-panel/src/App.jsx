@@ -9,7 +9,6 @@ import Login from "./components/login";
 
 function App() {
   const [selectedMentor, setselectedMentor] = useState("Vishal Sharma");
-  const [functocall, setfunctocall] = useState(() => { })
   const [curcompName, setcurcompName] = useState("student_table")
 
 
@@ -29,11 +28,10 @@ function App() {
                   
                   setcurrComp={setcurcompName}
                   setselectedMentor={setselectedMentor}
-                  
-                  functocall={functocall}
+                
                 />
                 {curcompName == "student_table" ? 
-                <StudentTable selectedMentor={selectedMentor} setfunctocall={setfunctocall} /> : <Queries />}
+                <StudentTable selectedMentor={selectedMentor}  /> : <Queries />}
               </>
             }
           />
