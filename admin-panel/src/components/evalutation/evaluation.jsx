@@ -9,6 +9,8 @@ function Evaluation() {
 
     const navigate = useNavigate();
     const [searchParams] = useSearchParams();
+
+   
   
     useEffect(() => {
       
@@ -69,7 +71,8 @@ function Evaluation() {
             });
             if (response.ok) {
                 alert('Data saved successfully!');
-                console.log(formData)
+                
+                navigate("/home");
             } else {
                 alert('Error saving data');
             }
