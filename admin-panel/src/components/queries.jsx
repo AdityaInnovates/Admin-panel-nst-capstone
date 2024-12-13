@@ -40,8 +40,13 @@ function Queries() {
     }, []);
 
 
-    const [showTooltipId, setShowTooltipId] = useState(null);
+        const [showTooltipId, setShowTooltipId] = useState(null);
     
+        const [isModalOpen, setIsModalOpen] = useState(false);
+
+        const toggleModal = () => {
+            setIsModalOpen(!isModalOpen);
+        };
 
 
     return(
@@ -91,7 +96,47 @@ function Queries() {
                             </div>
                         </td>
                         
-                        <td className="px-2 py-2 text-center">{item.feedback ? <div>{item.feedback}</div> : <button>Reply</button>}</td>
+                        <td className="px-2 py-2 text-center">{item.feedback ? (<div>{item.feedback}</div>) : (
+                            <>
+                        <button
+                             onClick={toggleModal}
+                                className=""
+                            >
+                                Toggle modal
+                            </button>
+
+                            {isModalOpen && (
+                                <div
+                                id="static-modal"
+                                className="fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full overflow-y-auto overflow-x-hidden flex backdrop-blur-sm"
+                                >
+                                    
+                                <div className="relative p-4 w-[50%] max-h-full">
+                                    <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                                    <div className="flex items-center justify-between p-3 border-b rounded-t dark:border-gray-600 flex-col">
+                                    <button onClick={toggleModal} className="ml-auto">X</button>
+                                        <textarea name="" id="" className="h-[200px] w-[80%] rounded-xl p-3"></textarea>
+                                    </div>
+
+                                   
+
+                                    
+                                        <button
+                                        onClick={toggleModal}
+                                        type="button"
+                                        className="m-3"
+                                        >
+                                        Send Reply
+                                        </button>
+                                       
+                                   
+                                    </div>
+                                </div>
+                                </div>
+                            )}
+                          </>
+                        )}
+                        </td>
                         
                             <td className="px-2 py-2">
                                 <div className='flex items-center justify-center'>
