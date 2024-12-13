@@ -28,9 +28,8 @@ function StudentTable({ selectedMentor }) {
         }
       } catch (error) {
         if (error.response) {
-          console.error(error.response.data);
-          console.error(error.response.status);
           setError(`Error ${error.response.status}: ${error.response.data}`);
+          console.log(error);
         } else {
           setError("Failed to fetch data.");
         }

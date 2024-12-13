@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import "./nav.css";
 import Queries from "../queries";
-import Stable from "../landing/student_table";
+import StudentTable from "../landing/student_table";
 
 function Nav({ setcurrComp, setselectedMentor }) {
   const mentors = [
@@ -25,7 +25,7 @@ function Nav({ setcurrComp, setselectedMentor }) {
       <nav>
         <div className="logo">Logo</div>
         <div className="menu">
-          <button onClick={() => setcurrComp(<Stable />)}>Home</button>
+          <button onClick={() => setcurrComp(<StudentTable />)}>Home</button>
           <button onClick={() => setcurrComp(<Queries />)}>Queries</button>
         </div>
 
