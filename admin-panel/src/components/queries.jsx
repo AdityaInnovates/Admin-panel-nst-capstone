@@ -8,34 +8,32 @@ function Queries() {
     const [tableData, setTableData] = useState([]);
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(true);
-
-    useEffect(() => {
-        const fetchData = async () => {
-            setLoading(true);
-            try {
-                const response = await axios.get("https://backend-newton-capstone-eval.onrender.com/AskQuery/queries", {
-                    headers: {
-                        "ngrok-skip-browser-warning": true
-                    }
-                });
-                console.log(response.data.msg);
-
-                
-                if (response.data && response.data.msg) {
-                    setTableData(response.data.msg); 
-                
+    const fetchData = async () => {
+        setLoading(true);
+        try {
+            const response = await axios.get("https://backend-newton-capstone-eval.onrender.com/AskQuery/queries", {
+                headers: {
+                    "ngrok-skip-browser-warning": true
                 }
-            } catch (error) {
-                const errorMessage = error.response 
-                    ? `Error ${error.response.status}: ${error.response.data}`
-                    : "Failed to fetch data. Please check your network connection.";
-                setError(errorMessage);
-                setTableData([]);
-            } finally {
-                setLoading(false);
-            }
-        };
+            });
+            console.log(response.data.msg);
 
+            
+            if (response.data && response.data.msg) {
+                setTableData(response.data.msg); 
+            
+            }
+        } catch (error) {
+            const errorMessage = error.response 
+                ? `Error ${error.response.status}: ${error.response.data}`
+                : "Failed to fetch data. Please check your network connection.";
+            setError(errorMessage);
+            setTableData([]);
+        } finally {
+            setLoading(false);
+        }
+    };
+    useEffect(() => {
         fetchData();
     }, []);
 
@@ -45,8 +43,35 @@ function Queries() {
         const [isModalOpen, setIsModalOpen] = useState(false);
 
         const toggleModal = () => {
+            
             setIsModalOpen(!isModalOpen);
         };
+
+        const [message, setMessage] = useState("");
+
+  const sendMessage = async (id) => {
+   
+    try {
+      const response = await fetch("https://backend-newton-capstone-eval.onrender.com/AskQuery/queries", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ feedback : message, id : id}),
+      });
+
+      if (response.ok) {
+        alert("Message sent successfully!");
+        setMessage(""); 
+        fetchData();
+      } else {
+        alert("Failed to send message.");
+      }
+    } catch (error) {
+      console.error("Error sending message:", error);
+      alert("An error occurred while sending the message.");
+    }
+}
 
 
     return(
@@ -62,13 +87,13 @@ function Queries() {
                         <th scope="col" className="px-6 py-3">Email</th>
                         <th scope="col" className="px-6 py-3 text-center">Query</th>
                         <th scope="col" className="px-6 py-3 text-center">Your Reply</th>
-                        <th scope="col" className="px-6 py-3 text-center">Send Email</th>
+                        
                         
                     </tr>
                     </thead>
                     <tbody>
                     {tableData.map(item => (
-                        <tr key={item.id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                        <tr key={item._id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                         <th scope="row" className="px-5 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                             {item.name}
                         </th>
@@ -80,12 +105,12 @@ function Queries() {
                                         <div className="relative inline-block" >
                                             <div
                                                 className="text-blue-600 border-b-2 border-dotted cursor-pointer"
-                                                onMouseEnter={() => setShowTooltipId(item.id)}
+                                                onMouseEnter={() => setShowTooltipId(item._id)}
                                                 onMouseLeave={() => setShowTooltipId(null)}
                                             >
                                                 Show Query
                                             </div>
-                                            {showTooltipId === item.id && (
+                                            {showTooltipId === item._id && (
                                                 <div className="absolute right-full top-1/2 transform -translate-y-1/2 w-[350px] bg-black text-white text-center rounded p-2 z-10 mr-2">
                                                     <span className="absolute top-1/2 right-full transform -translate-y-1/2 border-transparent border-5 border-r-black"></span>
                                                     {item.query}
@@ -102,7 +127,7 @@ function Queries() {
                              onClick={toggleModal}
                                 className=""
                             >
-                                Toggle modal
+                                Reply
                             </button>
 
                             {isModalOpen && (
@@ -115,21 +140,19 @@ function Queries() {
                                     <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
                                     <div className="flex items-center justify-between p-3 border-b rounded-t dark:border-gray-600 flex-col">
                                     <button onClick={toggleModal} className="ml-auto">X</button>
-                                        <textarea name="" id="" className="h-[200px] w-[80%] rounded-xl p-3"></textarea>
+                                        <textarea name="" 
+                                        id="" 
+                                        value={message}
+                                        onChange={(e) => setMessage(e.target.value)}
+                                        className="h-[200px] w-[80%] rounded-xl p-3"></textarea>
                                     </div>
-
-                                   
-
-                                    
                                         <button
-                                        onClick={toggleModal}
+                                        onClick={() => {toggleModal(); sendMessage(item._id);}}
                                         type="button"
                                         className="m-3"
                                         >
                                         Send Reply
-                                        </button>
-                                       
-                                   
+                                        </button>                        
                                     </div>
                                 </div>
                                 </div>
@@ -138,11 +161,7 @@ function Queries() {
                         )}
                         </td>
                         
-                            <td className="px-2 py-2">
-                                <div className='flex items-center justify-center'>
-                                    <button>Send</button>
-                                    </div>
-                            </td>
+                            
                         </tr>
                     ))}
                     </tbody>
