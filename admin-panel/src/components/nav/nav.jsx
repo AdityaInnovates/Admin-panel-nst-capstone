@@ -20,7 +20,12 @@ function Nav({  setselectedMentor,selectedMentor,setcurrComp }) {
     "Swati Priya",
     "Uttam Kumar Mahatto",
   ];
-  return (
+
+  function delToken() {
+
+    localStorage.removeItem('authToken')
+ }
+   return (
     <>
       <nav>
         <div className="logo">Logo</div>
@@ -29,7 +34,7 @@ function Nav({  setselectedMentor,selectedMentor,setcurrComp }) {
           <button onClick={() => setcurrComp("Query")}>Queries</button>
         </div>
 
-        <form className="mentors_list">
+        <form className="mentors_list flex">
           <select
             id="mentors"
             value={selectedMentor}
@@ -45,7 +50,10 @@ function Nav({  setselectedMentor,selectedMentor,setcurrComp }) {
               </option>
             ))}
           </select>
+          <button onClick={delToken}>Logout</button>
         </form>
+
+        
       </nav>
     </>
   );

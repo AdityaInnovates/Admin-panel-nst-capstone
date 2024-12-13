@@ -4,7 +4,18 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
+
 function StudentTable({ selectedMentor }) {
+    const navigate = useNavigate();
+
+    const token = localStorage.getItem('authToken');
+
+
+    if (!token) {
+        navigate('/login')
+    }
+
+
   const [tableData, setTableData] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -43,12 +54,13 @@ function StudentTable({ selectedMentor }) {
   }, [selectedMentor]);
 
   const [showTooltipId, setShowTooltipId] = useState(null);
-  const navigate = useNavigate();
+  
 
   return (
     <>
-      {loading && <div className="loader">Loading...</div>}
-      {error && <div className="error">{error}</div>}
+    
+      { !loading ? 
+    
       <div className="relative overflow-x-auto shadow-md sm:rounded-lg my-[80px]">
         <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
           <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -176,8 +188,12 @@ function StudentTable({ selectedMentor }) {
           </tbody>
         </table>
       </div>
-    </>
-  );
-}
+ :
+    ( <div className="flex items-center justify-center h-[600px]">Loading.......</div> )}
 
+        {error && <div className="error flex items-center justify-center h-[600px]">{error}</div>}
+
+    </>
+    );
+}
 export default StudentTable;
