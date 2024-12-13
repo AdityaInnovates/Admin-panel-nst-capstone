@@ -21,13 +21,13 @@ function App() {
                   element = {<Login/>}
           />
           <Route
-            path="/home"
+            path="/"
             element={
               <>
                 <Nav
                   selectedMentor={selectedMentor}
                   
-                  setcurcompName={setcurcompName}
+                  setcurrComp={setcurcompName}
                   setselectedMentor={setselectedMentor}
                   
                   functocall={functocall}
