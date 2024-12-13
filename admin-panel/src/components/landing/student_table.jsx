@@ -203,7 +203,7 @@ function StudentTable({ selectedMentor }) {
                     <td className="px-2 py-2">
                       <div className="flex items-center justify-center">
                         <button aria-label={`Send email to ${item.email}`} onClick={()=>sendMail(item.email)}>
-                          Send
+                          {item?.isMailSend ? (<>Resend</>) : (<>Send</>)}
                         </button>
                       </div>
                     </td>
