@@ -4,13 +4,14 @@ import StudentTable from "./components/landing/student_table";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useState } from "react";
 import Evaluation from "./components/evalutation/evaluation";
+import Queries from "./components/queries";
 
 function App() {
   const [selectedMentor, setselectedMentor] = useState("Vishal Sharma");
-  const [currComp, setcurrComp] = useState(
-    <StudentTable selectedMentor={selectedMentor} />
-  );
+  const [functocall, setfunctocall] = useState(() => { })
+  const [curcompName, setcurcompName] = useState("student_table")
 
+  
   return (
     <>
       <BrowserRouter>
@@ -20,10 +21,15 @@ function App() {
             element={
               <>
                 <Nav
-                  setcurrComp={setcurrComp}
+                  selectedMentor={selectedMentor}
+                  
+                  setcurcompName={setcurcompName}
                   setselectedMentor={setselectedMentor}
+                  
+                  functocall={functocall}
                 />
-                {currComp}
+                {curcompName == "student_table" ? 
+                <StudentTable selectedMentor={selectedMentor} setfunctocall={setfunctocall} /> : <Queries />}
               </>
             }
           />

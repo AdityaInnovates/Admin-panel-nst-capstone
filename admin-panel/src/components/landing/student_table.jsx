@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import link from "../../assets/link.png";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
@@ -7,13 +8,12 @@ function StudentTable({ selectedMentor }) {
   const [tableData, setTableData] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
-
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
       try {
         const response = await axios.get(
-          "https://a209-115-244-141-202.ngrok-free.app/studentlist?mentor=" +
+          "https://backend-newton-capstone-eval.onrender.com/studentlist?mentor=" +
             selectedMentor,
           {
             headers: {
@@ -28,8 +28,9 @@ function StudentTable({ selectedMentor }) {
         }
       } catch (error) {
         if (error.response) {
+          console.error(error.response.data);
+          console.error(error.response.status);
           setError(`Error ${error.response.status}: ${error.response.data}`);
-          console.log(error);
         } else {
           setError("Failed to fetch data.");
         }
@@ -38,7 +39,6 @@ function StudentTable({ selectedMentor }) {
         setLoading(false);
       }
     };
-
     fetchData();
   }, [selectedMentor]);
 
@@ -75,7 +75,7 @@ function StudentTable({ selectedMentor }) {
                 Report
               </th>
               <th scope="col" className="px-6 py-3 text-center">
-                Evaluated
+                Evaluate
               </th>
               <th scope="col" className="px-6 py-3 text-center">
                 Send Email
@@ -143,17 +143,25 @@ function StudentTable({ selectedMentor }) {
                   </td>
                   <td className="px-2 py-2 ">
                     <div className="flex justify-center items-center">
-                      {item.report.feedback}
+                      {item.report.total > 0 ? (
+                        <div>{item.report.total}</div>
+                      ) : (
+                        <div>0</div>
+                      )}
                     </div>
                   </td>
                   <td className="px-2 py-2">
                     <div className="flex justify-center items-center">
-                      <button
-                        disabled={item.report.completionStatus === "Done"}
-                        onClick={() => navigate("/evaluate")}
-                      >
-                        Go
-                      </button>
+                      {item.report.total ? (
+                        <div>Evaluated</div>
+                      ) : (
+                        <button
+                          disabled={item.report.total > 0}
+                          onClick={() => navigate(`/evaluate?id=${item._id}`)}
+                        >
+                          Go
+                        </button>
+                      )}
                     </div>
                   </td>
                   <td className="px-2 py-2">
