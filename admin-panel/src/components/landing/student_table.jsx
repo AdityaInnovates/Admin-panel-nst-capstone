@@ -12,7 +12,7 @@ function StudentTable({ selectedMentor }) {
 
 
     if (!token) {
-        navigate('/login')
+        navigate('/')
     }
 
 
