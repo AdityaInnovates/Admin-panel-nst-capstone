@@ -1,9 +1,8 @@
 /* eslint-disable react/prop-types */
 import "./nav.css";
-import Queries from "../queries";
-import Stable from "../landing/student_table";
 
-function Nav({ setcurrComp, setselectedMentor }) {
+
+function Nav({  setselectedMentor,selectedMentor,setcurcompName }) {
   const mentors = [
     "Vishal Sharma",
     "Ajay Sharma",
@@ -25,14 +24,19 @@ function Nav({ setcurrComp, setselectedMentor }) {
       <nav>
         <div className="logo">Logo</div>
         <div className="menu">
-          <button onClick={() => setcurrComp(<Stable />)}>Home</button>
-          <button onClick={() => setcurrComp(<Queries />)}>Queries</button>
+          <button onClick={() => setcurcompName("student_table")}>Home</button>
+          <button onClick={() => setcurcompName("queries_table")}>Queries</button>
         </div>
 
         <form className="mentors_list">
           <select
             id="mentors"
-            onChange={(e) => setselectedMentor(e.target.value)}
+            value={selectedMentor}
+            onChange={async (e) => {
+              setselectedMentor(e.target.value)
+            }
+            }
+              
           >
             {mentors.map((name, index) => (
               <option key={index} value={name.toLowerCase()}>

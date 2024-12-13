@@ -13,7 +13,7 @@ function Queries() {
         const fetchData = async () => {
             setLoading(true);
             try {
-                const response = await axios.get("https://a209-115-244-141-202.ngrok-free.app/AskQuery/queries", {
+                const response = await axios.get("https://backend-newton-capstone-eval.onrender.com/AskQuery/queries", {
                     headers: {
                         "ngrok-skip-browser-warning": true
                     }
