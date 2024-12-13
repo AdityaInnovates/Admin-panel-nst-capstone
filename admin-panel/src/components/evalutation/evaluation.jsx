@@ -5,6 +5,7 @@ function Evaluation() {
     const [formData, setFormData] = useState({});
    
     const [total, setTotal] = useState(0);
+    const [msg,setMsg] = useState("");
 
     const navigate = useNavigate();
     const [searchParams] = useSearchParams();
@@ -26,26 +27,36 @@ function Evaluation() {
       return null; 
     }
 
+    const handleMsg = (e) => {
+        const { value } = e.target; 
+        setMsg(value); 
+    }
+
 
     const handleChange = (e) => {
         const { name, value } = e.target;
         const max = e.target.getAttribute("max");
-
-
-        if (max && Number(value) <= Number(max)) {
-            setFormData({ ...formData, [name]: Number(value) });
-
-
-            const newValue = parseFloat(value) || 0;
-            setTotal(prevTotal => prevTotal + newValue);
-        };
+        const newValue = parseFloat(value) || 0;
+    
+        if (max && newValue <= Number(max)) {
+            setFormData((prevFormData) => {
+                const oldValue = prevFormData[name] || 0; // Get the previous value
+                const updatedFormData = { ...prevFormData, [name]: newValue };
+    
+                // Update total directly
+                setTotal(prevTotal => prevTotal - oldValue + newValue); // Update total
+    
+                return updatedFormData; // Update form data properly
+            });
+        }
     };
-
+    
     async function handleSubmit(e) {
         e.preventDefault();
         const data = {
             id: new URL(document.URL).searchParams.get("id"),
-            evaluation: { total, ...formData }
+            evaluation: { total, ...formData },
+            feedback : msg
         }
 
         try {
@@ -57,10 +68,10 @@ function Evaluation() {
                 body: JSON.stringify(data),
             });
             if (response.ok) {
-                alert('Form submitted successfully!');
+                alert('Data saved successfully!');
                 console.log(formData)
             } else {
-                alert('Error submitting form');
+                alert('Error saving data');
             }
         } catch (error) {
             console.error('Error:', error);
@@ -112,6 +123,7 @@ function Evaluation() {
                                             className="px-1 py-1 rounded-md w-[80%] outline-none text-center placeholder-gray-400 placeholder-opacity-40"
                                             onChange={handleChange}
                                             max={5}
+                                            required
                                         />
                                     </li>
                                     <li className="px-1 py-1">
@@ -122,6 +134,7 @@ function Evaluation() {
                                             className="px-1 py-1 rounded-md w-[80%] outline-none text-center placeholder-gray-400 placeholder-opacity-40"
                                             onChange={handleChange}
                                             max={5}
+                                            required
                                         />
                                     </li>
                                     <li className="px-1 py-1">
@@ -132,6 +145,7 @@ function Evaluation() {
                                             className="px-1 py-1 rounded-md w-[80%] outline-none text-center placeholder-gray-400 placeholder-opacity-40"
                                             onChange={handleChange}
                                             max={5}
+                                            required
                                         />
                                     </li>
                                     <li className="px-1 py-1">
@@ -142,6 +156,7 @@ function Evaluation() {
                                             className="px-1 py-1 rounded-md w-[80%] outline-none text-center placeholder-gray-400 placeholder-opacity-40"
                                             onChange={handleChange}
                                             max={5}
+                                            required
                                         />
                                     </li>
                                     <li className="px-1 py-1">
@@ -152,6 +167,7 @@ function Evaluation() {
                                             className="px-1 py-1 rounded-md w-[80%] outline-none text-center placeholder-gray-400 placeholder-opacity-40"
                                             onChange={handleChange}
                                             max={5}
+                                            required
                                         />
                                     </li>
                                 </ul>
@@ -189,6 +205,7 @@ function Evaluation() {
                                             value={formData.LP || ""}
                                             onChange={handleChange}
                                             max={10}
+                                            required
                                         />
                                     </li>
                                     <li className="px-1 py-1">
@@ -199,6 +216,7 @@ function Evaluation() {
                                             value={formData.TCS || ""}
                                             onChange={handleChange}
                                             max={5}
+                                            required
                                         />
                                     </li>
                                     <li className="px-1 py-1">
@@ -209,6 +227,7 @@ function Evaluation() {
                                             className="px-1 py-1 rounded-md w-[80%] outline-none text-center placeholder-gray-400 placeholder-opacity-40"
                                             onChange={handleChange}
                                             max={10}
+                                            required
                                         />
                                     </li>
                                     <li className="px-1 py-1">
@@ -219,6 +238,7 @@ function Evaluation() {
                                             className="px-1 py-1 rounded-md w-[80%] outline-none text-center placeholder-gray-400 placeholder-opacity-40"
                                             onChange={handleChange}
                                             max={5}
+                                            required
                                         />
                                     </li>
                                     <li className="px-1 py-1">
@@ -229,6 +249,7 @@ function Evaluation() {
                                             className="px-1 py-1 rounded-md w-[80%] outline-none text-center placeholder-gray-400 placeholder-opacity-40"
                                             onChange={handleChange}
                                             max={5}
+                                            required
                                         />
                                     </li>
                                 </ul>
@@ -257,6 +278,7 @@ function Evaluation() {
                                             className="px-1 py-1 rounded-md w-[80%] outline-none text-center placeholder-gray-400 placeholder-opacity-40"
                                             onChange={handleChange}
                                             max={10}
+                                            required
                                         />
                                     </li>
                                     <li className="px-1 py-1">
@@ -267,6 +289,7 @@ function Evaluation() {
                                             className="px-1 py-1 rounded-md w-[80%] outline-none text-center placeholder-gray-400 placeholder-opacity-40"
                                             onChange={handleChange}
                                             max={10}
+                                            required
                                         />
                                     </li>
                                 </ul>
@@ -294,6 +317,7 @@ function Evaluation() {
                                             className="px-1 py-1 rounded-md w-[80%] outline-none text-center placeholder-gray-400 placeholder-opacity-40"
                                             onChange={handleChange}
                                             max={10}
+                                            required
                                         />
                                     </li>
                                     <li className="px-1 py-1">
@@ -304,6 +328,7 @@ function Evaluation() {
                                             className="px-1 py-1 rounded-md w-[80%] outline-none text-center placeholder-gray-400 placeholder-opacity-40"
                                             onChange={handleChange}
                                             max={5}
+                                            required
                                         />
                                     </li>
                                 </ul>
@@ -331,6 +356,7 @@ function Evaluation() {
                                             className="px-1 py-1 rounded-md w-[80%] outline-none text-center placeholder-gray-400 placeholder-opacity-40"
                                             onChange={handleChange}
                                             max={3}
+                                            required
                                         />
                                     </li>
                                     <li className="px-1 py-1 ">
@@ -341,6 +367,7 @@ function Evaluation() {
                                             className="px-1 py-1 rounded-md w-[80%] outline-none text-center placeholder-gray-400 placeholder-opacity-40"
                                             onChange={handleChange}
                                             max={2}
+                                            required
                                         />
                                     </li>
                                 </ul>
@@ -358,8 +385,18 @@ function Evaluation() {
 
                     </tbody>
                 </table>
-                <div>
-                    <button type="submit" onClick={handleSubmit} className="ml-[60rem] mt-2 w-[14rem]">Submit</button>
+                <div className="flex w-[100%] items-center">
+                
+                <textarea
+                name="msg"
+                
+                placeholder="Evaluation feedback for student....."
+                className="h-[100px] w-[60%] px-3 py-3 mx-5 my-5 rounded-xl"
+                value={msg}
+                onChange={handleMsg}
+                required
+                />
+                    <button type="submit" onClick={handleSubmit} className="ml-[20%] mt-2 w-[20%] h-[50%]">Submit</button>
                 </div>
             </div>
         </>

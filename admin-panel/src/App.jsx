@@ -21,7 +21,7 @@ function App() {
                   element = {<Login/>}
           />
           <Route
-            path="/"
+            path="/home"
             element={
               <>
                 <Nav

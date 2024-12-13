@@ -1,6 +1,11 @@
 
 
 function Login() {
+
+    function pass() {
+        alert("Kindly contact you admin !")
+    }
+
     return(
         <>
             <form className="flex flex-col items-center justify-center max-w-[100%] h-[40vw]">
@@ -18,9 +23,9 @@ function Login() {
                     id="pass"
                     className="h-[40px] w-[350px] px-3 py-2 rounded-xl"
                     />
-                    <div className="ml-[220px]">Forgot password?</div>
+                    <div className="ml-[220px] mt-2 cursor-pointer" onClick={pass}>Forgot password?</div>
                 </div>
-                    <button className="pt-2 m-10 px-8 ml-[135px]">Submit</button>
+                    <button className="pt-2 mx-[150px] px-8 mt-5 mb-10">Submit</button>
                 </div>
             
             </form>

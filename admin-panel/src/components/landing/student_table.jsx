@@ -143,8 +143,8 @@ function StudentTable({ selectedMentor }) {
                   </td>
                   <td className="px-2 py-2 ">
                     <div className="flex justify-center items-center">
-                      {item.report.total > 0 ? (
-                        <div>{item.report.total}</div>
+                      {item.report?.total > 0 ? (
+                        <div>{item.report?.total||0}</div>
                       ) : (
                         <div>0</div>
                       )}
@@ -152,11 +152,11 @@ function StudentTable({ selectedMentor }) {
                   </td>
                   <td className="px-2 py-2">
                     <div className="flex justify-center items-center">
-                      {item.report.total ? (
+                      {item.report?.total ? (
                         <div>Evaluated</div>
                       ) : (
                         <button
-                          disabled={item.report.total > 0}
+                          disabled={item.report?.total > 0}
                           onClick={() => navigate(`/evaluate?id=${item._id}`)}
                         >
                           Go
