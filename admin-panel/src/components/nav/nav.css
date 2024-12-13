@@ -11,6 +11,13 @@ nav {
     justify-content: space-between;
     width: 17%;
     font-size: larger;
+    height: 80%;
+}
+
+.menu button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .logo {
@@ -18,13 +25,11 @@ nav {
     font-size: x-large;
 }
 
-form {
-    max-width: 20rem;
-    
-  }
+
   
 .mentors_list {
     padding-right: 10px;
+    width: 23%;
 }  
 
   select {
@@ -44,3 +49,8 @@ form {
     box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5); 
   }
   
+  .active {
+    
+    border: 2px solid;
+    border-color: #81afe1;
+  }

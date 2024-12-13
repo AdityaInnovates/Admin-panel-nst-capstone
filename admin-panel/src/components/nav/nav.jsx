@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import "./nav.css";
-// import Queries from "../queries";
-// import StudentTable from "../landing/student_table";
+import { useState } from "react";
+
 
 function Nav({  setselectedMentor,selectedMentor,setcurrComp }) {
   const mentors = [
@@ -15,28 +15,38 @@ function Nav({  setselectedMentor,selectedMentor,setcurrComp }) {
     "Nischal Gupta",
     "Rahul Kumar",
     "Rashmi Kumari",
-    "Risabh Sharma",
+    "Rishabh Sharma",
     "Shivam Gupta",
     "Swati Priya",
     "Uttam Kumar Mahatto",
   ];
 
   function delToken() {
-
     localStorage.removeItem('authToken')
  }
+
+    const [activeTab, setActiveTab] = useState("home");
+
+    const handleClick = (tab) => {
+      setActiveTab(tab); // Update the active tab state
+    };
+
+
    return (
     <>
       <nav>
         <div className="logo">Logo</div>
         <div className="menu">
-          <button onClick={() => setcurrComp("student_table")}>Home</button>
-          <button onClick={() => setcurrComp("Query")}>Queries</button>
+          <button onClick={() => {setcurrComp("student_table");handleClick("home")}}
+                  className={activeTab === "home" ? "active" : ""}>Home</button>
+          <button onClick={() => {setcurrComp("Query");handleClick("query")}} 
+                  className={activeTab === "query" ? "active" : ""}>Queries</button>
         </div>
 
         <form className="mentors_list flex">
           <select
             id="mentors"
+            className="mr-5"
             value={selectedMentor}
             onChange={async (e) => {
               setselectedMentor(e.target.value)
@@ -50,7 +60,7 @@ function Nav({  setselectedMentor,selectedMentor,setcurrComp }) {
               </option>
             ))}
           </select>
-          <button onClick={delToken}>Logout</button>
+          <button onClick={delToken} className="mr-10">Logout</button>
         </form>
 
         

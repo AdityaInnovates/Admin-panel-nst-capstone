@@ -1,9 +1,11 @@
+/* eslint-disable react/prop-types */
 import { useState,useEffect } from "react";
 import axios from "axios"
 
 
-function Queries() {
+function Queries({ selectedMentor }) {
 
+    
 
     const [tableData, setTableData] = useState([]);
     const [error, setError] = useState(null);
@@ -11,13 +13,12 @@ function Queries() {
     const fetchData = async () => {
         setLoading(true);
         try {
-            const response = await axios.get("https://backend-newton-capstone-eval.onrender.com/AskQuery/queries", {
+            const response = await axios.get("https://backend-newton-capstone-eval.onrender.com/AskQuery/queries?mentor=" + selectedMentor ,
+                 {
                 headers: {
                     "ngrok-skip-browser-warning": true
                 }
             });
-            console.log(response.data.msg);
-
             
             if (response.data && response.data.msg) {
                 setTableData(response.data.msg); 
@@ -35,7 +36,7 @@ function Queries() {
     };
     useEffect(() => {
         fetchData();
-    }, []);
+    }, [selectedMentor]);
 
 
         const [showTooltipId, setShowTooltipId] = useState(null);
@@ -92,7 +93,7 @@ function Queries() {
                     </tr>
                     </thead>
                     <tbody>
-                    {tableData.map(item => (
+                    { tableData?.map(item => (
                         <tr key={item._id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                         <th scope="row" className="px-5 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                             {item.name}

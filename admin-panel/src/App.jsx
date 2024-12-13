@@ -31,7 +31,7 @@ function App() {
                 
                 />
                 {curcompName == "student_table" ? 
-                <StudentTable selectedMentor={selectedMentor}  /> : <Queries />}
+                <StudentTable selectedMentor={selectedMentor}  /> : <Queries selectedMentor={selectedMentor} />}
               </>
             }
           />
