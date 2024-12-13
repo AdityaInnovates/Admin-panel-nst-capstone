@@ -5,19 +5,23 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useState } from "react";
 import Evaluation from "./components/evalutation/evaluation";
 import Queries from "./components/queries";
+import Login from "./components/login";
 
 function App() {
   const [selectedMentor, setselectedMentor] = useState("Vishal Sharma");
   const [functocall, setfunctocall] = useState(() => { })
   const [curcompName, setcurcompName] = useState("student_table")
 
-  
+
   return (
     <>
       <BrowserRouter>
         <Routes>
+          <Route path="/login"
+                  element = {<Login/>}
+          />
           <Route
-            path="/"
+            path="/home"
             element={
               <>
                 <Nav

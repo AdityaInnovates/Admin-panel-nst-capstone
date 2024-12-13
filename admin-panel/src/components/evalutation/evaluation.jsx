@@ -16,7 +16,7 @@ function Evaluation() {
       
       if (!id || id.trim() === "") {
         
-        navigate("/");
+        navigate("/home");
       }
     }, [searchParams, navigate]);
   
