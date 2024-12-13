@@ -10,37 +10,37 @@ function StudentTable({ selectedMentor }) {
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     const fetchData = async () => {
-        setLoading(true);
-        try {
-          const response = await axios.get(
-            "https://backend-newton-capstone-eval.onrender.com/studentlist?mentor=" +
-              selectedMentor,
-            {
-              headers: {
-                "ngrok-skip-browser-warning": true,
-              },
-            }
-          );
-          console.log(response.data);
-    
-          if (response.data && response.data.data) {
-            setTableData(response.data.data);
+      setLoading(true);
+      try {
+        const response = await axios.get(
+          "https://backend-newton-capstone-eval.onrender.com/studentlist?mentor=" +
+            selectedMentor,
+          {
+            headers: {
+              "ngrok-skip-browser-warning": true,
+            },
           }
-        } catch (error) {
-          if (error.response) {
-            console.error(error.response.data);
-            console.error(error.response.status);
-            setError(`Error ${error.response.status}: ${error.response.data}`);
-          } else {
-            setError("Failed to fetch data.");
-          }
-          setTableData([]);
-        } finally {
-          setLoading(false);
+        );
+        console.log(response.data);
+
+        if (response.data && response.data.data) {
+          setTableData(response.data.data);
         }
-      };
+      } catch (error) {
+        if (error.response) {
+          console.error(error.response.data);
+          console.error(error.response.status);
+          setError(`Error ${error.response.status}: ${error.response.data}`);
+        } else {
+          setError("Failed to fetch data.");
+        }
+        setTableData([]);
+      } finally {
+        setLoading(false);
+      }
+    };
     fetchData();
-  },[selectedMentor]);
+  }, [selectedMentor]);
 
   const [showTooltipId, setShowTooltipId] = useState(null);
   const navigate = useNavigate();
@@ -143,23 +143,25 @@ function StudentTable({ selectedMentor }) {
                   </td>
                   <td className="px-2 py-2 ">
                     <div className="flex justify-center items-center">
-                      {item.report.total > 0 ? (<div>{item.report.total}</div>) : (<div>0</div>)}
+                      {item.report.total > 0 ? (
+                        <div>{item.report.total}</div>
+                      ) : (
+                        <div>0</div>
+                      )}
                     </div>
                   </td>
                   <td className="px-2 py-2">
                     <div className="flex justify-center items-center">
-                    {item.report.total ? (
+                      {item.report.total ? (
                         <div>Evaluated</div>
-                                
-                            ) : (
-                                <button
-                                disabled={item.report.total > 0}
-                                onClick={() => navigate(`/evaluate?id=${item._id}`)}
-                              >
-                                Go
-                              </button>  
-                        )}
-                      
+                      ) : (
+                        <button
+                          disabled={item.report.total > 0}
+                          onClick={() => navigate(`/evaluate?id=${item._id}`)}
+                        >
+                          Go
+                        </button>
+                      )}
                     </div>
                   </td>
                   <td className="px-2 py-2">

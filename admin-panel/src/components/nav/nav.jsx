@@ -1,5 +1,10 @@
 /* eslint-disable react/prop-types */
 import "./nav.css";
+<<<<<<< HEAD
+import Queries from "../queries";
+import StudentTable from "../landing/student_table";
+=======
+>>>>>>> refs/remotes/origin/main
 
 
 function Nav({  setselectedMentor,selectedMentor,setcurcompName }) {
@@ -24,8 +29,13 @@ function Nav({  setselectedMentor,selectedMentor,setcurcompName }) {
       <nav>
         <div className="logo">Logo</div>
         <div className="menu">
+<<<<<<< HEAD
+          <button onClick={() => setcurrComp(<StudentTable />)}>Home</button>
+          <button onClick={() => setcurrComp(<Queries />)}>Queries</button>
+=======
           <button onClick={() => setcurcompName("student_table")}>Home</button>
           <button onClick={() => setcurcompName("queries_table")}>Queries</button>
+>>>>>>> refs/remotes/origin/main
         </div>
 
         <form className="mentors_list">
