@@ -1,9 +1,16 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 function Login() {
 
-    const navigate = useNavigate()
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        const token = localStorage.getItem('authToken');
+        if (token) {
+            navigate("/home");
+        }
+    }, [navigate]);
 
         const [formData, setFormData] = useState({
           email: '',

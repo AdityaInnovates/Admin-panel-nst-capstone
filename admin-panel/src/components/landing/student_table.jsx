@@ -146,7 +146,7 @@ function StudentTable({ selectedMentor }) {
 
                     <td className="px-2 py-2">
                       <div className="flex items-center justify-center">
-                        <a href={item.hostedList} target="blank">
+                        <a href={item.hostedLink} target="blank">
                           <img src={link} className="h-5" />
                         </a>
                       </div>
@@ -190,19 +190,20 @@ function StudentTable({ selectedMentor }) {
                       <div className="flex justify-center items-center">
                         {item.report?.total ? (
                           <div>Evaluated</div>
-                        ) : (
+                        ) : (<>{}
                           <button
-                            disabled={item.report?.total > 0}
+                            disabled={item.report?.total >= 0}
                             onClick={() => navigate(`/evaluate?id=${item._id}`)}
                           >
                             Go
                           </button>
+                          </>
                         )}
                       </div>
                     </td>
                     <td className="px-2 py-2">
                       <div className="flex items-center justify-center">
-                        <button aria-label={`Send email to ${item.email}`} onClick={()=>sendMail(item.email)}>
+                        <button disabled={item.report?.total <= 0} aria-label={`Send email to ${item.email}`} onClick={()=>sendMail(item.email)}>
                           {item?.isMailSend ? (<>Resend</>) : (<>Send</>)}
                         </button>
                       </div>

@@ -22,6 +22,7 @@ function Queries({ selectedMentor }) {
             
             if (response.data && response.data.msg) {
                 setTableData(response.data.msg); 
+                console.log(response.data.msg)
             
             }
         } catch (error) {
@@ -122,7 +123,7 @@ function Queries({ selectedMentor }) {
                             </div>
                         </td>
                         
-                        <td className="px-2 py-2 text-center">{item.feedback ? (<div>{item.feedback}</div>) : (
+                        <td className="px-2 py-2 text-center w-[40%]">{item.feedback ? (<div>{item.feedback}</div>) : (
                             <>
                         <button
                              onClick={toggleModal}
