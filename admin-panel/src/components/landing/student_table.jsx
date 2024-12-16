@@ -3,17 +3,22 @@ import link from "../../assets/link.png";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import Loader from "../loader";
+import { toast } from "react-toastify";
+// import { ToastContainer,toast } from 'react-toastify';
+// import 'react-toastify/dist/ReactToastify.css';
+
+
 
 
 function StudentTable({ selectedMentor }) {
   const navigate = useNavigate();
 
   const token = localStorage.getItem('authToken');
-
-
   if (!token) {
     navigate('/')
   }
+  
 
 
   const [tableData, setTableData] = useState([]);
@@ -32,15 +37,17 @@ function StudentTable({ selectedMentor }) {
             },
           }
         );
-        console.log(response.data);
+       
 
         if (response.data && response.data.data) {
+
           setTableData(response.data.data);
+          
         }
       } catch (error) {
         if (error.response) {
-          console.error(error.response.data);
-          console.error(error.response.status);
+          toast.error(error.response.data.data)
+        
           setError(`Error ${error.response.status}: ${error.response.data}`);
         } else {
           setError("Failed to fetch data.");
@@ -67,14 +74,14 @@ function StudentTable({ selectedMentor }) {
       });
 
       if (response.ok) {
-        alert("Message sent successfully!");
-      
-      } else {
-        alert("Failed to send message.");
+        toast.success("Report send successfully!", { position: "top-right" });
+      } 
+      else {
+        toast.error("Failed to send message.");
       }
     } catch (error) {
       console.error("Error sending message:", error);
-      alert("An error occurred while sending the message.");
+      toast("An error occurred while sending the message.");
     }
   }
 
@@ -85,7 +92,7 @@ function StudentTable({ selectedMentor }) {
 
       {!loading ?
 
-        <div className="relative overflow-x-auto shadow-md sm:rounded-lg my-[80px]">
+        <div className="relative overflow-x-auto shadow-md sm:rounded-lg my-[2rem] mx-[2rem]">
           <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
             <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
               <tr className="text-[15px]">
@@ -158,6 +165,7 @@ function StudentTable({ selectedMentor }) {
                             className="text-blue-600 cursor-pointer"
                             onMouseEnter={() => setShowTooltipId(item._id)}
                             onMouseLeave={() => setShowTooltipId(null)}
+                            onClick={()=>alert(item.query)}
                           >
                             Show Query
                           </div>
@@ -188,17 +196,14 @@ function StudentTable({ selectedMentor }) {
                     </td>
                     <td className="px-2 py-2">
                       <div className="flex justify-center items-center">
-                        {item.report?.total ? (
-                          <div>Evaluated</div>
-                        ) : (<>{}
+                      
                           <button
-                            disabled={item.report?.total >= 0}
                             onClick={() => navigate(`/evaluate?id=${item._id}`)}
                           >
-                            Go
+                            {item.report?.total ? (<>Re-Evaluate</>) : (<>Evaluate</>)}
                           </button>
-                          </>
-                        )}
+                          
+                        
                       </div>
                     </td>
                     <td className="px-2 py-2">
@@ -214,10 +219,13 @@ function StudentTable({ selectedMentor }) {
           </table>
         </div>
         :
-        (<div className="flex items-center justify-center h-[600px]">Loading.......</div>)}
+        (<div className="flex items-center justify-center h-[600px]">
+          
+          <Loader/>
+      </div>)}
 
       {error && <div className="error flex items-center justify-center h-[600px]">{}</div>}
-
+      {/* <ToastContainer/> */}
     </>
   );
 }

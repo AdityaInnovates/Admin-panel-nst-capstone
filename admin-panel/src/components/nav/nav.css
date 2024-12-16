@@ -2,14 +2,16 @@ nav {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    height: 60px;
+    height: 80px;
+    width: 100%;
     background-color: #1f2937;
 }
 
 .menu {
     display: flex;
-    justify-content: space-between;
-    width: 17%;
+    /* justify-content: space-between; */
+    /* width: 17%; */
+    gap: 1rem;
     font-size: larger;
     height: 80%;
 }
@@ -18,6 +20,10 @@ nav {
     display: flex;
     justify-content: center;
     align-items: center;
+    height: auto;
+    width: auto;
+    font-size: 1rem;
+    padding: 0.4rem 1rem;
 }
 
 .logo {
@@ -29,7 +35,7 @@ nav {
   
 .mentors_list {
     padding-right: 10px;
-    width: 23%;
+    /* width: 23%; */
 }  
 
   select {
@@ -53,4 +59,10 @@ nav {
     
     border: 2px solid;
     border-color: #81afe1;
+  }
+  #mentors{
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    text-indent: 1px;
+    text-overflow: '';
   }

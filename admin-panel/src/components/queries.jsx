@@ -1,7 +1,8 @@
 /* eslint-disable react/prop-types */
 import { useState,useEffect } from "react";
 import axios from "axios"
-
+import Loader from "./loader";
+import { toast } from "react-toastify";
 
 function Queries({ selectedMentor }) {
 
@@ -63,13 +64,14 @@ function Queries({ selectedMentor }) {
       });
 
       if (response.ok) {
-        alert("Message sent successfully!");
+        toast.success("Reply sent successfully!");
         setMessage(""); 
         fetchData();
       } else {
-        alert("Failed to send message.");
+        toast.error("Failed to send reply.");
       }
     } catch (error) {
+        toast.error("Failed to send reply.");
       console.error("Error sending message:", error);
       alert("An error occurred while sending the message.");
     }
@@ -169,7 +171,9 @@ function Queries({ selectedMentor }) {
                     </tbody>
                 </table>
                 </div>
-    ) : ( <div className="flex items-center justify-center h-[600px]">Loading data, please wait...</div> )}
+    ) : ( <div className="flex items-center justify-center h-[600px]">
+        <Loader/>
+    </div> )}
         {error && <div className="error flex items-center justify-center h-[600px]">{error}</div>}    
         </>
     );

@@ -1,5 +1,7 @@
 import { useState,useEffect } from "react";
 import { useNavigate,useSearchParams } from "react-router-dom";
+import { toast } from "react-toastify";
+
 
 function Evaluation() {
     const [formData, setFormData] = useState({});
@@ -70,11 +72,11 @@ function Evaluation() {
                 body: JSON.stringify(data),
             });
             if (response.ok) {
-                alert('Data saved successfully!');
-                
+                toast.success('Data saved successfully!');
                 navigate("/home");
             } else {
-                alert('Error saving data');
+                toast.error('Error saving data!');
+               
             }
         } catch (error) {
             console.error('Error:', error);

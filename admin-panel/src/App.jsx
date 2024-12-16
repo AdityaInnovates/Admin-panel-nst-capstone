@@ -2,15 +2,27 @@ import Nav from "./components/nav/nav";
 import "./App.css";
 import StudentTable from "./components/landing/student_table";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Evaluation from "./components/evalutation/evaluation";
 import Queries from "./components/queries";
 import Login from "./components/login";
 
 function App() {
-  const [selectedMentor, setselectedMentor] = useState("Vishal Sharma");
+  const [selectedMentor, setselectedMentor] = useState("");
   const [curcompName, setcurcompName] = useState("student_table")
 
+
+  useEffect(()=>{
+
+    if (localStorage.getItem("Mentor")) {
+      setselectedMentor(localStorage.getItem("Mentor"))
+    }
+    else {
+      setselectedMentor("Vishal Sharma")
+    }
+  },[])
+
+  
 
   return (
     <>
