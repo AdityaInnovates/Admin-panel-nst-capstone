@@ -68,11 +68,11 @@ function StudentTable({ selectedMentor }) {
           body: JSON.stringify({ to: mail }),
         }
       );
-
-      if (response.ok) {
+      var body = await response.json();
+      if (body.status) {
         toast.success("Report send successfully!", { position: "top-right" });
       } else {
-        toast.error("Failed to send message.");
+        toast.error(body.msg);
       }
     } catch (error) {
       console.error("Error sending message:", error);
