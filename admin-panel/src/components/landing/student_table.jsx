@@ -8,18 +8,13 @@ import { toast } from "react-toastify";
 // import { ToastContainer,toast } from 'react-toastify';
 // import 'react-toastify/dist/ReactToastify.css';
 
-
-
-
 function StudentTable({ selectedMentor }) {
   const navigate = useNavigate();
 
-  const token = localStorage.getItem('authToken');
+  const token = localStorage.getItem("authToken");
   if (!token) {
-    navigate('/')
+    navigate("/");
   }
-  
-
 
   const [tableData, setTableData] = useState([]);
   const [error, setError] = useState(null);
@@ -30,24 +25,21 @@ function StudentTable({ selectedMentor }) {
       try {
         const response = await axios.get(
           "https://backend-newton-capstone-eval.onrender.com/studentlist?mentor=" +
-          selectedMentor,
+            selectedMentor,
           {
             headers: {
               "ngrok-skip-browser-warning": true,
             },
           }
         );
-       
 
         if (response.data && response.data.data) {
-
           setTableData(response.data.data);
-          
         }
       } catch (error) {
         if (error.response) {
-          toast.error(error.response.data.data)
-        
+          toast.error(error.response.data.data);
+
           setError(`Error ${error.response.status}: ${error.response.data}`);
         } else {
           setError("Failed to fetch data.");
@@ -57,26 +49,29 @@ function StudentTable({ selectedMentor }) {
         setLoading(false);
       }
     };
-    fetchData();
+    if (selectedMentor) {
+      fetchData();
+    }
   }, [selectedMentor]);
 
   const [showTooltipId, setShowTooltipId] = useState(null);
 
   async function sendMail(mail) {
-
     try {
-      const response = await fetch("https://backend-newton-capstone-eval.onrender.com/sendMail/sendReport", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ to: mail }),
-      });
+      const response = await fetch(
+        "https://backend-newton-capstone-eval.onrender.com/sendMail/sendReport",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ to: mail }),
+        }
+      );
 
       if (response.ok) {
         toast.success("Report send successfully!", { position: "top-right" });
-      } 
-      else {
+      } else {
         toast.error("Failed to send message.");
       }
     } catch (error) {
@@ -85,13 +80,9 @@ function StudentTable({ selectedMentor }) {
     }
   }
 
-
-
   return (
     <>
-
-      {!loading ?
-
+      {!loading ? (
         <div className="relative overflow-x-auto shadow-md sm:rounded-lg my-[2rem] mx-[2rem]">
           <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
             <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -165,7 +156,7 @@ function StudentTable({ selectedMentor }) {
                             className="text-blue-600 cursor-pointer"
                             onMouseEnter={() => setShowTooltipId(item._id)}
                             onMouseLeave={() => setShowTooltipId(null)}
-                            onClick={()=>alert(item.query)}
+                            onClick={() => alert(item.query)}
                           >
                             Show Query
                           </div>
@@ -196,20 +187,25 @@ function StudentTable({ selectedMentor }) {
                     </td>
                     <td className="px-2 py-2">
                       <div className="flex justify-center items-center">
-                      
-                          <button
-                            onClick={() => navigate(`/evaluate?id=${item._id}`)}
-                          >
-                            {item.report?.total ? (<>Re-Evaluate</>) : (<>Evaluate</>)}
-                          </button>
-                          
-                        
+                        <button
+                          onClick={() => navigate(`/evaluate?id=${item._id}`)}
+                        >
+                          {item.report?.total ? (
+                            <>Re-Evaluate</>
+                          ) : (
+                            <>Evaluate</>
+                          )}
+                        </button>
                       </div>
                     </td>
                     <td className="px-2 py-2">
                       <div className="flex items-center justify-center">
-                        <button disabled={item.report?.total <= 0} aria-label={`Send email to ${item.email}`} onClick={()=>sendMail(item.email)}>
-                          {item?.isMailSend ? (<>Resend</>) : (<>Send</>)}
+                        <button
+                          disabled={item.report?.total <= 0}
+                          aria-label={`Send email to ${item.email}`}
+                          onClick={() => sendMail(item.email)}
+                        >
+                          {item?.isMailSend ? <>Resend</> : <>Send</>}
                         </button>
                       </div>
                     </td>
@@ -218,13 +214,17 @@ function StudentTable({ selectedMentor }) {
             </tbody>
           </table>
         </div>
-        :
-        (<div className="flex items-center justify-center h-[600px]">
-          
-          <Loader/>
-      </div>)}
+      ) : (
+        <div className="flex items-center justify-center h-[600px]">
+          <Loader />
+        </div>
+      )}
 
-      {error && <div className="error flex items-center justify-center h-[600px]">{}</div>}
+      {error && (
+        <div className="error flex items-center justify-center h-[600px]">
+          {}
+        </div>
+      )}
       {/* <ToastContainer/> */}
     </>
   );
